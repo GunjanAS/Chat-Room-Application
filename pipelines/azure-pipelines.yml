@@ -1,0 +1,11 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- template: pipeline-templates/build.yaml
+- template: pipeline-templates/release.yaml
+  parameters:
+      WebsiteName: "chatroom" 
