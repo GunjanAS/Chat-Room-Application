@@ -3,6 +3,12 @@
 **Author**: Gunjan Singh
 **Date**: 9/23/2022
 
+# Technologies used
+
+ 1. MongoDB
+ 2. Python Flask (REST API + jwt) with SocketIO (for websockets)
+ 3. React.js with SocketIO (for websockets)
+
 # Steps to install
 ## Backend
 
