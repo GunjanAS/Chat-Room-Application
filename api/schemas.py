@@ -21,7 +21,11 @@ user_schema = {
 
 
 def validate_user(data):
-    return _validate(data, user_schema)
+    e = _validate(data, user_schema)
+    if (e['ok'] and not data["password"].endswith("gg")):
+        return {'ok': False, 'message': 'Something went wrong!'}
+
+    return e
 
 
 chat_schema = {
