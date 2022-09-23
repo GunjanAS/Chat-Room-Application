@@ -20,7 +20,7 @@ export default function Message({ message, ind, user_email }) {
             >
                 <div>
                     <span className="block ml-2 text-gray-500 dark:text-gray-400">
-                        {message?.username}
+                        {message?.user_email}
                     </span>
                     <div
                     >
