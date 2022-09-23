@@ -20,8 +20,10 @@ user_schema = {
 }
 
 
-def validate_user(data):
+def validate_user(data, from_login=False):
     e = _validate(data, user_schema)
+    if from_login:
+        return e
     if (e['ok'] and not data["password"].endswith("gg")):
         return {'ok': False, 'message': 'Something went wrong!'}
 

@@ -11,13 +11,22 @@ export default function ChatRoom() {
     const [user_email, setUserEmail] = useState("")
 
     const loadSocketInstance = function () {
-        let url = "localhost:5000/"
-        let socket = io(url + "?jwt=" + localStorage.getItem('token'), {
-            transports: ["websocket"],
-            cors: {
-                origin: "http://localhost:3000/",
-            },
-        });
+        const env = "Prod";
+        const token = "?jwt=" + localStorage.getItem('token');
+        let socket = null;
+        if (env === "Dev") {
+            let url = "localhost:5000/"
+            socket = io(url + token, {
+                transports: ["websocket"],
+                cors: {
+                    origin: "http://localhost:3000/",
+                },
+            });
+        } else {
+            socket = io("/" + token, {
+                transports: ["websocket"],
+            });
+        }
         setSocketInstance(socket);
     }
 
