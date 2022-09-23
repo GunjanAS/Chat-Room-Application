@@ -6,12 +6,12 @@
 # Steps to install
 ## Backend
 
- 1. cd api
+ 1. cd nimble-test-master/api
  2. pip install -r requirements.txt
 
 ## Frontend
 
- 1. cd client
+ 1. cd nimble-test-master/client
  2. npm install
 
 ## Database
@@ -24,10 +24,10 @@
 # Steps to run
 ## Backend
 
- 1. cd api
+ 1. cd nimble-test-master/api
  2. python app.py
  
  ## Frontend
  
- 1. cd client
+ 1. cd nimble-test-master/client
  2. npm start
