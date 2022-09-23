@@ -5,9 +5,6 @@ import Message from "./Message";
 import Header from "./Header";
 import services from "../services";
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-}
 
 export default function ChatRoom() {
     const navigate = useNavigate();
@@ -29,31 +26,12 @@ export default function ChatRoom() {
             console.log(data);
             setHistory(data.data.filter(d => d.type === "chat"));
         });;
-        // fetch("/api/retrieveChats", {
-        //     headers: { Authorization: "Bearer " + localStorage.getItem('token') }
-        // }).then(r => r.json()).then(r => {
-        //     setHistory(r)
-        // });
     }
 
     const fetchUser = function () {
         services.fetch_auth("users").then(data => {
             setUserEmail(data.data)
         });
-        // fetch("/api/protected", {
-        //     headers: { Authorization: "Bearer " + localStorage.getItem('token') }
-        // }).then(r => r.json()).then(r => {
-        //     console.log("r.allowed_user");
-        //     console.log(r.allowed_user);
-        //     console.log(r.username);
-        //     setuserid(r.allowed_user)
-        //     setusername(r.username)
-        //     // if (r.status !== 200) {
-        //     //     navigate("/login");
-        //     // } else {
-        //     //     //set user data from r => mainly userId
-        //     // }
-        // });
     }
 
 
@@ -100,9 +78,6 @@ export default function ChatRoom() {
             socket.on("connect", (data) => {
                 console.log(data);
             });
-
-            // setLoading(false);
-
             socket.on("disconnect", (data) => {
                 console.log(data);
             });
@@ -131,9 +106,6 @@ export default function ChatRoom() {
                 <div className="min-w-full bg-pink border-x border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded lg:grid lg:grid-cols-1">
                     <div className="bg-white border-r border-gray-200 dark:bg-gray-900 dark:border-gray-700 lg:col-span-1">
                         <div className="relative w-full p-6 overflow-y-auto h-[30rem] bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700">
-
-                            {/* <input type="text" value={message} onChange={handleText} />
-            <button onClick={handleSubmit}>submit</button> */}
                             <div className="lg:col-span-2 lg:block">
                                 <div className="w-full">
                                     <div className="relative w-full p-6 overflow-y-auto h-[30rem] bg-white border-b border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -146,16 +118,11 @@ export default function ChatRoom() {
 
                                         </ul>
                                     </div>
-
                                     <ul className="space-y-2">
-
                                         {messages.map((message, ind) => {
                                             return <Message message={message} ind={ind} user_email={user_email} />
                                         })}
-
                                     </ul>
-
-
                                 </div >
                             </div >
                             <div ref={scrollRef} />
@@ -179,14 +146,12 @@ export default function ChatRoom() {
 
                     </div >
                 </div>
-
             </div>
             <form onSubmit={handleLogout}>
                 <div className=" flex items-center justify-center pt-8">
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transform -translate-y-6 ">
                         Logout
                     </button>
-
                 </div>
             </form>
         </div>

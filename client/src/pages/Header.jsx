@@ -10,10 +10,8 @@ export default function Header(prop) {
                         </span>
                     </div>
                     <div className="flex md:order-2">
-
                     </div>
                     <div className="flex  top-0 right-0">
-
                         <div>
                             <span>User : </span>
                             <strong>{prop.prop}</strong>

@@ -23,32 +23,8 @@ function Login() {
                 seterror(true);
             }
         })
-        // fetch('/api/users/login', {
-        //     method: 'post',
-        //     body: JSON.stringify(opts),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        // }).then(r => r.json())
-        //     .then(data => {
-        //         if (data.data.token) {
-        //             localStorage.setItem('token', data.data.token);
-        //             navigate("/chatroom");
-        //         }
-        //         else {
-        //             seterror(true);
-        //         }
-        //     })
 
     }
-
-    // const handleUsernameChange = (e) => {
-    //     setUsername(e.target.value)
-    // }
-
-    // const handlePasswordChange = (e) => {
-    //     setPassword(e.target.value)
-    // }
 
     return (
         <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">

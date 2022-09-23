@@ -16,14 +16,11 @@ export default function Signup() {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            // return setError("Passwords do not match");
             console.log("Passwords do not match");
         }
 
         try {
-            //   setError("");
             setLoading(true);
-            //   await register(email, password);
             console.log("You pressed signup")
             services.fetch_post('users', { email, password }).then(data => {
                 if (data.data.token) {
