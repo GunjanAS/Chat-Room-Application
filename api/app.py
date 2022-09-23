@@ -15,7 +15,7 @@ from utils import json_serial
 load_dotenv()
 
 cors = flask_cors.CORS()
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='', static_folder='../client/build')
 SECRET_KEY = os.environ.get('SECRET_KEY') or 'secret!'
 
 app.config['JWT_SECRET_KEY'] = SECRET_KEY
@@ -25,15 +25,20 @@ app.debug = True
 
 jwt = JWTManager(app)
 schema = JsonSchema(app)
-socketio = SocketIO(app, cors_allowed_origins="*")
 
-# Initializes CORS
-cors.init_app(app)
+if (os.environ.get('ENV') == "dev"):
+    socketio = SocketIO(app, cors_allowed_origins="*")
+    # Initializes CORS
+    cors.init_app(app)
+else:
+    socketio = SocketIO(app)
 
 
 @app.route("/")
-def hello():
-    return "Hello World!"
+def index():
+    if (os.environ.get('ENV') == "dev"):
+        return "Hello World"
+    return app.send_static_file('index.html')
 
 
 @app.route("/api/users/", methods=["POST"])
@@ -84,7 +89,7 @@ def login():
                 "data": None,
                 "error": "Bad request"
             }, 400
-        is_validated = validate_user(user)
+        is_validated = validate_user(user, True)
         if is_validated['ok'] is not True:
             return {
                 "message": 'Invalid data',
