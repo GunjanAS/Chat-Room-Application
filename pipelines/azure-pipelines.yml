@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-- template: build.yaml
-- template: release.yaml
+- template: ./build.yaml
+- template: ./release.yaml
   parameters:
       WebsiteName: "chatroom" 
