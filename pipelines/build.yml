@@ -1,0 +1,55 @@
+# File: build stage yaml 
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+      
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    variables:
+      solution: '**/*.sln'
+
+    steps:
+    - task: Npm@1
+      inputs:
+        command: 'install'
+        workingDir: '$(Build.SourcesDirectory)/client/'
+
+    - task: Npm@1
+      name: buildClient
+      inputs:
+        command: 'custom'
+        workingDir: '$(Build.SourcesDirectory)/client/'
+        customCommand: 'run build'
+
+    - task: CmdLine@2
+      name: apiEnvironmentVariables
+      inputs:
+        script: |
+          echo "DATA" > $(Build.SourcesDirectory)/api/.env
+          echo Hello world
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.ArtifactStagingDirectory)'
+        artifact: 'drop'
+        publishLocation: 'pipeline'  
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/api'
+        Contents: '**'
+        TargetFolder: '$(Build.StagingDirectory)/api'
+
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)/client/build'
+        Contents: '**'
+        TargetFolder: '$(Build.StagingDirectory)/client/build'
+    
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: '$(Build.StagingDirectory)'
+        artifact: 'website'
+        publishLocation: 'pipeline'

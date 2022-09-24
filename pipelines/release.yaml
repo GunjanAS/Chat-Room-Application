@@ -1,0 +1,30 @@
+# File: release stage
+
+parameters:
+    WebsiteName: default
+    WebsiteDirectory: ~/appx/$(WebsiteName)
+    
+stages:
+- stage: Release
+  jobs:
+    - deployment: 
+      environment: default-1
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: DownloadPipelineArtifact@2
+                inputs:
+                  buildType: 'current'
+                  artifactName: 'website'
+                  targetPath: '$(WebsiteDirectory)'
+
+              - task: CmdLine@2
+                inputs:
+                  script: |
+                    cd $(WebsiteDirectory)/api
+                    python3 -m venv env
+                    source env/bin/activate
+                    pip install -r requirements.txt
+                    ps aux | grep $(WebsiteName) | awk '{print $2;}' | xargs kill -9 2>/dev/null
+                    gunicorn --worker-class eventlet -w 1 app:app -n www$(WebsiteName) -b 0.0.0.0:5002 -D
