@@ -6,6 +6,8 @@ stages:
     - deployment: 
       environment: 
         name: default-1
+        resourceType: VirtualMachine
+        tags: web
       strategy:
         runOnce:
           deploy:
