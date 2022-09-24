@@ -1,14 +1,11 @@
 # File: release stage
-
-parameters:
-    WebsiteName: default
-    WebsiteDirectory: ~/appx/$(WebsiteName)
     
 stages:
 - stage: Release
   jobs:
     - deployment: 
-      environment: default-1
+      environment: 
+        name: default-1
       strategy:
         runOnce:
           deploy:
@@ -17,14 +14,14 @@ stages:
                 inputs:
                   buildType: 'current'
                   artifactName: 'website'
-                  targetPath: '$(WebsiteDirectory)'
+                  targetPath: '/home/alok/appx/chatroom'
 
               - task: CmdLine@2
                 inputs:
                   script: |
-                    cd $(WebsiteDirectory)/api
+                    cd /home/alok/appx/chatroom/api
                     python3 -m venv env
                     source env/bin/activate
                     pip install -r requirements.txt
-                    ps aux | grep $(WebsiteName) | awk '{print $2;}' | xargs kill -9 2>/dev/null
-                    gunicorn --worker-class eventlet -w 1 app:app -n www$(WebsiteName) -b 0.0.0.0:5002 -D
+                    ps aux | grep chatroom | awk '{print $2;}' | xargs kill -9 2>/dev/null
+                    gunicorn --worker-class eventlet -w 1 app:app -n wwwchatroom -b 0.0.0.0:5002 -D

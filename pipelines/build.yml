@@ -24,13 +24,6 @@ stages:
         workingDir: '$(Build.SourcesDirectory)/client/'
         customCommand: 'run build'
 
-    - task: CmdLine@2
-      name: apiEnvironmentVariables
-      inputs:
-        script: |
-          echo "DATA" > $(Build.SourcesDirectory)/api/.env
-          echo Hello world
-
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)'
